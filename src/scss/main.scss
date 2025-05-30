@@ -1,0 +1,175 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+
+/* Font Face */
+@font-face {
+  font-family: 'Thunder';
+  src: url('../../assets/fonts/Thunder-BlackLC.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+/* Base Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('../../assets/images/2151628202.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  min-height: 100vh;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+
+/* Game Elements */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(1, 32, 85, 0.7);
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 100, 255, 0.5);
+}
+
+
+h1 {
+  font-family: 'Thunder', sans-serif;
+  font-size: 10rem;
+  text-align: center;
+  color:rgb(245, 245, 178);
+  text-shadow:
+    0 0 5px #00a2ff,
+    0 0 10px #0066ff,
+    0 0 20px #0033ff;
+  letter-spacing: 4px;
+}
+
+h2 {
+  color:rgb(255, 230, 0);
+}
+
+#game-message {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 20px 0;
+  color: $accent-color;
+  display: none;
+}
+
+.boards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.board-container {
+  text-align: center;
+}
+
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 2px;
+  width: 400px;
+  height: 400px;
+  margin: 10px auto;
+  background-color: rgba(0, 50, 100, 0.5);
+  border: 2px solid #00a2ff;
+  padding: 5px;
+  box-shadow: 0 0 15px rgba(0, 162, 255, 0.7);
+}
+
+
+// Makes sure cells are visible and clickable
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgb(155, 132, 32);
+
+  // Important for click detection
+  pointer-events: auto;
+  cursor: pointer;
+
+  &.computer-cell:hover {
+    background-color: rgba(0,0,0,0.1);
+  }
+}
+
+.cell {
+  background-color: rgba(0, 80, 150, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: rgba(0, 150, 255, 0.5);
+  }
+
+  &.ship {
+    background-color: rgba(90, 153, 216, 0.5);
+  }
+
+  &.hit {
+    background-color: rgba(255, 50, 50, 0.7);
+    &::after {
+      content: '✖';
+      color: white;
+      font-size: 1.2rem;
+    }
+  }
+
+  &.miss {
+    background-color: rgba(200, 230, 255, 0.5);
+    &::after {
+      content: '○';
+      color: white;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: color.scale($primary-color, $lightness: -30%);
+  }
+}
+
+@media (max-width: 768px) {
+  .boards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .board {
+    width: 300px;
+    height: 300px;
+  }
+}
