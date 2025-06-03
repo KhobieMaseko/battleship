@@ -1,13 +1,10 @@
-import Player from './modules/Player';
-import DOMController from './modules/dom';
+import Game from './game';
 import './../scss/main.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Initializing game...');
-
-  const player = new Player('Player');
-  const computer = new Player('Computer', true);
-  const game = new DOMController(player, computer);
+  const game = new Game();
+  game.init();
 
   // Boards verification
   console.log('Player board element:', document.getElementById('player-board'));

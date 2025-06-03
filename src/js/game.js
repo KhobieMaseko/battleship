@@ -21,9 +21,13 @@ export default class Game {
   }
 
   resetGame() {
+    // Reset players (logic only)
     this.player = new Player('Player');
     this.computer = new Player('Computer', true);
-    this.domController = new DOMController(this.player, this.computer);
-    this.init();
+
+    // Reset the existing DOMController instead of creating a new one
+    this.domController.player = this.player;
+    this.domController.computer = this.computer;
+    this.domController.resetGame();
   }
 }

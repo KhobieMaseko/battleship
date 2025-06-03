@@ -8,17 +8,56 @@ export default class DOMController {
     this.computer = computer;
     this.currentPlayer = player;
     this.gameOver = false;
+    this.messageElement = this.initializeMessageElement();
 
-    // Initialize game
     this.setupShips();
     this.renderBoards();
     this.bindCellClickEvents();
   }
 
+  initializeMessageElement() {
+    let element = document.getElementById('game-message');
+    if (!element) {
+      element = document.createElement('div');
+      element.id = 'game-message';
+      element.style.display = 'none';
+      document.body.appendChild(element);
+    }
+    return element;
+  }
+
+  resetGame() {
+    // Reset game state
+    this.gameOver = false;
+    this.currentPlayer = this.player;
+
+    // Clear and hide message
+    this.messageElement.textContent = '';
+    this.messageElement.style.display = 'none';
+
+    // Reset gameboards
+    this.player.gameboard = new Gameboard();
+    this.computer.gameboard = new Gameboard();
+
+    // Reinitialize game
+    this.setupShips();
+    this.renderBoards();
+    this.bindCellClickEvents();
+
+    // Force DOM update
+    void this.messageElement.offsetWidth;
+  }
+
   bindCellClickEvents() {
     const computerBoard = document.getElementById('computer-board');
+
+    // Remove old event listeners
     if (computerBoard) {
-      computerBoard.addEventListener('click', (e) => {
+      const newBoard = computerBoard.cloneNode(true);
+      computerBoard.parentNode.replaceChild(newBoard, computerBoard);
+
+      // Add new listener
+      newBoard.addEventListener('click', (e) => {
         if (e.target.classList.contains('cell')) {
           this.handlePlayerAttack(e);
         }
@@ -61,9 +100,8 @@ export default class DOMController {
 
   endGame(winner) {
     this.gameOver = true;
-    const message = document.getElementById('game-message');
-    message.textContent = `${winner.name} Wins!!!`;
-    message.style.display = 'block';
+    this.messageElement.textContent = `${winner.name} Wins!!!`;
+    this.messageElement.style.display = 'block';
   }
 
   setupShips() {
@@ -110,6 +148,8 @@ export default class DOMController {
   }
 
   renderBoard(boardElement, gameboard, showShips) {
+    if (!boardElement) return;
+
     boardElement.innerHTML = '';
 
     for (let x = 0; x < 10; x++) {
