@@ -2,8 +2,7 @@
 
 A modern implementation of the classic Battleship board game with sleek UI and responsive design.
 
-![Battleship](https://github.com/user-attachments/assets/6fff538d-e344-402f-be32-db3efcc6d725)
-
+![Battleship2](https://github.com/user-attachments/assets/d1a4824c-5f4d-4614-a42d-141949add073)
 
 ## Features
 - Player vs Computer gameplay
